@@ -21,20 +21,23 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildHeader() {
     return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          'Welcome Kacung!',
+          'Welcome Customer!',
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF4C53A5),
+            color: Color.fromARGB(255, 42, 42, 45),
           ),
         ),
         SizedBox(height: 10),
         Text(
           'Login to continue',
-          style: TextStyle(fontSize: 18, color: Color(0xFF4C53A5)),
+          style: TextStyle(
+            fontSize: 18,
+            color: Color.fromARGB(255, 42, 42, 45),
+          ),
         ),
       ],
     );
@@ -45,7 +48,10 @@ class _LoginPageState extends State<LoginPage> {
       controller: _emailController,
       decoration: InputDecoration(
         labelText: 'Email',
-        prefixIcon: const Icon(Icons.email, color: Color(0xFF4C53A5)),
+        prefixIcon: const Icon(
+          Icons.email,
+          color: Color.fromARGB(255, 42, 42, 45),
+        ),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
       validator: (value) {
@@ -65,7 +71,10 @@ class _LoginPageState extends State<LoginPage> {
       controller: _passwordController,
       decoration: InputDecoration(
         labelText: 'Password',
-        prefixIcon: const Icon(Icons.lock, color: Color(0xFF4C53A5)),
+        prefixIcon: const Icon(
+          Icons.lock,
+          color: Color.fromARGB(255, 42, 42, 45),
+        ),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
       obscureText: true,
@@ -89,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF4C53A5),
+        backgroundColor: const Color.fromARGB(255, 42, 42, 45),
         padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
@@ -107,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: const Text(
         "Don't have an account? Sign Up",
-        style: TextStyle(color: Color(0xFF4C53A5)),
+        style: TextStyle(color: Color.fromARGB(255, 42, 42, 45)),
       ),
     );
   }

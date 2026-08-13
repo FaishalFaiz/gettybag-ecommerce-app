@@ -6,6 +6,7 @@ import 'pages/account_page.dart';
 import 'pages/chat_page.dart';
 import 'pages/chat_detail_page.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: 'loginPage',
       routes: {
         '/': (context) => const Homepage(),
         'cartPage': (context) => const CartPage(),
@@ -25,7 +26,6 @@ class MyApp extends StatelessWidget {
         'loginPage': (context) => const LoginPage(),
         'ListChat': (context) => const ChatListPage(),
         'DetailChat': (context) => ChatScreen(contactName: 'Nike Official'),
-
       },
     );
   }
