@@ -8,13 +8,13 @@ class ChatListPage extends StatelessWidget {
     // Data Daftar Chat
     final List<Map<String, String>> chats = [
       {
-        'name': 'Nike Official',
+        'name': 'Tere Liye OFC Store',
         'message': 'Segera Memesan Sebelum Kehabisan.',
         'time': '12:30',
-        'avatar': 'assets/images/7.jpg',
+        'avatar': 'assets/images/1.jpg',
       },
       {
-        'name': 'Expander',
+        'name': 'J.S Khairen Fan Store',
         'message': 'Hallo, Selamat Datang Di Nike Official.',
         'time': '12:05',
         'avatar': 'assets/images/5.jpg',
@@ -28,23 +28,21 @@ class ChatListPage extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
-            color: Color(0xFF4C53A5),
+            color: Color.fromARGB(255, 42, 42, 45),
           ),
         ),
         backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Color(0xFF4C53A5)),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 42, 42, 45)),
+        actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
       ),
       body: Column(
         children: [
           // Tombol Filter
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 19.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 19.0,
+              vertical: 8.0,
+            ),
             color: Colors.white,
             child: Row(
               children: [
@@ -53,7 +51,7 @@ class ChatListPage extends StatelessWidget {
                   child: const Text(
                     'Semua',
                     style: TextStyle(
-                      color: Color(0xFF4C53A5),
+                      color: Color.fromARGB(255, 42, 42, 45),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -63,9 +61,7 @@ class ChatListPage extends StatelessWidget {
                   onPressed: () {},
                   child: const Text(
                     'Belum Dibaca',
-                    style: TextStyle(
-                      color: Color.fromRGBO(255, 114, 123, 1),
-                    ),
+                    style: TextStyle(color: Color.fromRGBO(255, 114, 123, 1)),
                   ),
                 ),
               ],
@@ -93,7 +89,10 @@ class ChatListPage extends StatelessWidget {
                     children: [
                       Text(
                         chat['time']!,
-                        style: const TextStyle(color: Colors.grey, fontSize: 12),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
                       ),
                       if (index == 0)
                         Container(
@@ -111,10 +110,7 @@ class ChatListPage extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      "ChatDetail",
-                    );
+                    Navigator.pushNamed(context, "ChatDetail");
                   },
                 );
               },

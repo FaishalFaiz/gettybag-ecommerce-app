@@ -4,29 +4,38 @@ class ItemsWidget extends StatelessWidget {
   ItemsWidget({super.key});
 
   final List<String> myProductName = [
-    'Nike Jordan Travis Scott',
-    'Mie Ayam',
-    'Wardah orange',
-    'Iphone 17 Pro Max',
+    'Bumi - Tereliye',
+    'Bulan - Tereliye',
+    'Bintang - Tereliye',
+    'Matahari - Tereliye',
+    'Rumah - J.S Khairen',
+    'Bungkam Suara - J.S Khairen',
   ];
 
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      childAspectRatio: 0.68,
+      childAspectRatio: 1.0,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
       shrinkWrap: true,
       children: [
         for (int i = 0; i < myProductName.length; i++)
           Container(
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
+            padding: const EdgeInsets.only(
+              left: 15,
+              right: 15,
+              top: 8,
+              bottom: 8,
+            ),
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 // Header - Diskon dan Ikon Favorit
                 Row(
@@ -35,7 +44,7 @@ class ItemsWidget extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4C53A5),
+                        color: const Color.fromARGB(255, 42, 42, 45),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: const Text(
@@ -47,10 +56,7 @@ class ItemsWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Icon(
-                      Icons.favorite_border,
-                      color: Colors.red,
-                    ),
+                    const Icon(Icons.favorite_border, color: Colors.red),
                   ],
                 ),
 
@@ -59,25 +65,24 @@ class ItemsWidget extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, "itemsPage");
                   },
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
+                  child: Center(
                     child: Image.asset(
-                      'images/items/${i + 1}.jpg',
-                      height: 100,
-                      width: 100,
+                      'images/${i + 1}.jpg',
+                      height: 90,
+                      width: 90,
                     ),
                   ),
                 ),
 
                 // Nama Produk
                 Container(
-                  padding: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(bottom: 4),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     myProductName[i],
                     style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF4C53A5),
+                      fontSize: 15,
+                      color: Color.fromARGB(255, 42, 42, 45),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -87,13 +92,16 @@ class ItemsWidget extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: const Text(
-                    'Write description Product',
+                    'Adalah salah satu buku dari seri BUMI yang ditulis oleh penulis terkenal di Indonesia yaitu Tere Liye.',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF4C53A5),
+                      fontSize: 12,
+                      color: Color.fromARGB(255, 42, 42, 45),
                     ),
                   ),
                 ),
+                SizedBox(height: 5),
 
                 // Harga dan Ikon Keranjang
                 const Padding(
@@ -106,13 +114,13 @@ class ItemsWidget extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF4C53A5),
+                          color: Color.fromARGB(255, 42, 42, 45),
                         ),
                       ),
                       Icon(
                         Icons.shopping_cart,
                         size: 20,
-                        color: Color(0xFF4C53A5),
+                        color: Color.fromARGB(255, 42, 42, 45),
                       ),
                     ],
                   ),

@@ -29,26 +29,26 @@ class CartPage extends StatelessWidget {
 
                 // Tombol Add Coupon Code
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 15,
+                  ),
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF4C53A5),
+                          color: const Color.fromARGB(255, 42, 42, 45),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
+                        child: const Icon(Icons.add, color: Colors.white),
                       ),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           'Add Coupon Code',
                           style: TextStyle(
-                            color: Color(0xFF4C53A5),
+                            color: Color.fromARGB(255, 42, 42, 45),
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
@@ -88,7 +88,7 @@ class CartAppBar extends StatelessWidget {
             child: const Icon(
               Icons.arrow_back,
               size: 30,
-              color: Color(0xFF4C53A5),
+              color: Color.fromARGB(255, 42, 42, 45),
             ),
           ),
           const Padding(
@@ -98,7 +98,7 @@ class CartAppBar extends StatelessWidget {
               style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF4C53A5),
+                color: Color.fromARGB(255, 42, 42, 45),
               ),
             ),
           ),
@@ -106,7 +106,7 @@ class CartAppBar extends StatelessWidget {
           const Icon(
             Icons.more_vert,
             size: 30,
-            color: Color(0xFF4C53A5),
+            color: Color.fromARGB(255, 42, 42, 45),
           ),
         ],
       ),
@@ -122,128 +122,135 @@ class CartItemSamples extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        for (int i = 1; i <= 4; i++)
-          Container(
-            height: 110,
-            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                // Radio Button
-                Radio(
-                  value: '',
-                  groupValue: '',
-                  activeColor: const Color(0xFF4C53A5),
-                  onChanged: (index) {},
-                ),
-
-                // Gambar Produk dari Asset Lokal
-                Container(
-                  height: 70,
-                  width: 70,
-                  margin: const EdgeInsets.only(right: 15),
-                  child: Image.asset('images/carts/$i.jpg'),
-                ),
-
-                // Informasi Produk (Nama & Harga)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Product Title',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF4C53A5),
-                        ),
-                      ),
-                      Text(
-                        '\$55',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF4C53A5),
-                        ),
-                      ),
-                    ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          for (int i = 1; i <= 4; i++)
+            Container(
+              height: 110,
+              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  // Radio Button
+                  Radio(
+                    value: '',
+                    groupValue: '',
+                    activeColor: const Color.fromARGB(255, 42, 42, 45),
+                    onChanged: (index) {},
                   ),
-                ),
 
-                const Spacer(),
+                  // Gambar Produk dari Asset Lokal
+                  Container(
+                    height: 70,
+                    width: 70,
+                    margin: const EdgeInsets.only(right: 15),
+                    child: Image.asset('images/$i.jpg'),
+                  ),
 
-                // Tombol Aksi (Hapus & Jumlah Item)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Icon(Icons.delete, color: Colors.red),
-                      Row(
-                        children: [
-                          // Tombol Tambah Item
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 10,
-                                ),
-                              ],
-                            ),
-                            child: const Icon(Icons.add, size: 18),
+                  // Informasi Produk (Nama & Harga)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Product Title',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 42, 42, 45),
                           ),
+                        ),
+                        Text(
+                          '\$55',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 42, 42, 45),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
-                          // Jumlah Item
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            child: const Text(
-                              "01",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF4C53A5),
+                  const Spacer(),
+
+                  // Tombol Aksi (Hapus & Jumlah Item)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 10,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(Icons.delete, color: Colors.red),
+                        Row(
+                          children: [
+                            // Tombol Tambah Item
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
+                              child: const Icon(Icons.add, size: 18),
+                            ),
+
+                            // Jumlah Item
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: const Text(
+                                "01",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 42, 42, 45),
+                                ),
                               ),
                             ),
-                          ),
 
-                          // Tombol Kurang Item
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 10,
-                                ),
-                              ],
+                            // Tombol Kurang Item
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
+                              child: const Icon(Icons.remove, size: 18),
                             ),
-                            child: const Icon(Icons.remove, size: 18),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -269,7 +276,7 @@ class CartBottomNavBar extends StatelessWidget {
                 Text(
                   'Total:',
                   style: TextStyle(
-                    color: Color(0xFF4C53A5),
+                    color: Color.fromARGB(255, 42, 42, 45),
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
@@ -279,7 +286,7 @@ class CartBottomNavBar extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
-                    color: Color(0xFF4C53A5),
+                    color: Color.fromARGB(255, 42, 42, 45),
                   ),
                 ),
               ],
@@ -289,7 +296,7 @@ class CartBottomNavBar extends StatelessWidget {
               height: 50,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: const Color(0xFF4C53A5),
+                color: const Color.fromARGB(255, 42, 42, 45),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(

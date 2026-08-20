@@ -7,10 +7,10 @@ class CategoriesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // List kategori yang ingin ditampilkan
     final List<String> categories = [
-      'Outfit',
-      'Makanan',
-      'Skincare',
-      'Elektronik',
+      'Aksi',
+      'Petualangan',
+      'Romansa',
+      'Kehidupan',
     ];
 
     return SingleChildScrollView(
@@ -27,10 +27,9 @@ class CategoriesWidget extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Image.asset(
-                    'images/categories/${i + 1}.jpg', // Pastikan gambar sesuai dengan indeks
-                    width: 40,
-                    height: 40,
+                  Icon(
+                    Icons.book,
+                    color: const Color.fromARGB(255, 42, 42, 45),
                   ),
                   const SizedBox(width: 10),
                   Text(
@@ -38,7 +37,7 @@ class CategoriesWidget extends StatelessWidget {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
-                      color: Color(0xFF4C53A5),
+                      color: Color.fromARGB(255, 42, 42, 45),
                     ),
                   ),
                 ],

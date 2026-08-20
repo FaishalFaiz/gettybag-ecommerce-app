@@ -6,22 +6,18 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFF4C53A5);
+    const primaryColor = Color.fromARGB(255, 42, 42, 45);
 
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(25),
       child: Row(
         children: [
-          const Icon(
-            Icons.sort,
-            size: 30,
-            color: primaryColor,
-          ),
+          const Icon(Icons.book, size: 30, color: primaryColor),
           const Padding(
             padding: EdgeInsets.only(left: 20),
             child: Text(
-              'EcoGlobal',
+              'GettyBag Book Store',
               style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,

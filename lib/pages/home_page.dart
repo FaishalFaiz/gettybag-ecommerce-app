@@ -32,7 +32,7 @@ class _HomepageState extends State<Homepage> {
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
         height: 70,
-        color: const Color(0xFF4C53A5),
+        color: const Color.fromARGB(255, 42, 42, 45),
         index: _currentIndex,
         items: const [
           Icon(Icons.home, size: 30, color: Colors.white),
@@ -91,7 +91,7 @@ class HomePageContent extends StatelessWidget {
                     const Icon(
                       Icons.camera_alt,
                       size: 27,
-                      color: Color(0xFF4C53A5),
+                      color: Color.fromARGB(255, 42, 42, 45),
                     ),
                   ],
                 ),
@@ -105,11 +105,11 @@ class HomePageContent extends StatelessWidget {
                   horizontal: 10,
                 ),
                 child: const Text(
-                  'Categories',
+                  'Genres',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF4C53A5),
+                    color: Color.fromARGB(255, 42, 42, 45),
                   ),
                 ),
               ),
@@ -125,11 +125,11 @@ class HomePageContent extends StatelessWidget {
                   horizontal: 10,
                 ),
                 child: const Text(
-                  'Best Selling',
+                  'Best Selling Books',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF4C53A5),
+                    color: Color.fromARGB(255, 42, 42, 45),
                   ),
                 ),
               ),

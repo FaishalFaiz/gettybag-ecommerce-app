@@ -7,8 +7,17 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account'),
-        backgroundColor: const Color(0xFF4C53A5),
+        title: const Text(
+          'Your Account',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+            color: Color.fromARGB(255, 42, 42, 45),
+          ),
+        ),
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 42, 42, 45)),
+        actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -30,7 +39,10 @@ class AccountPage extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF4C53A5), Color(0xFF6B7CDA)],
+          colors: [
+            Color.fromARGB(255, 42, 42, 45),
+            Color.fromARGB(255, 42, 42, 45),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -41,7 +53,7 @@ class AccountPage extends StatelessWidget {
         children: [
           ClipOval(
             child: Image.asset(
-              'assets/images/jarwo.jpg',
+              'assets/images/mart.png',
               width: 100,
               height: 100,
               fit: BoxFit.cover,
@@ -52,7 +64,7 @@ class AccountPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               Text(
-                'Banyu Ganesha Widiyana',
+                'Faiz Faishal Nugroho',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -61,7 +73,7 @@ class AccountPage extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                'banyuganesha@example.com',
+                'faishal@example.com',
                 style: TextStyle(color: Colors.white70),
               ),
             ],
@@ -82,7 +94,11 @@ class AccountPage extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: ListTile(
-        leading: Icon(icon, color: const Color(0xFF4C53A5), size: 28),
+        leading: Icon(
+          icon,
+          color: const Color.fromARGB(255, 42, 42, 45),
+          size: 28,
+        ),
         title: Text(
           title,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -170,7 +186,7 @@ class AccountPage extends StatelessWidget {
                 Navigator.pushNamed(context, '/loginPage');
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4C53A5),
+                backgroundColor: const Color.fromARGB(255, 42, 42, 45),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
