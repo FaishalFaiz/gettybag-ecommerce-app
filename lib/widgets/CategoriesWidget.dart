@@ -1,49 +1,58 @@
 import 'package:flutter/material.dart';
+import '../core/theme/app_colors.dart';
+import '../core/theme/app_text_styles.dart';
 
-class CategoriesWidget extends StatelessWidget {
-  const CategoriesWidget({super.key});
+class CategoriesWidget extends StatefulWidget {
+  final List<String> genres;
+  final String selectedGenre;
+  final ValueChanged<String> onGenreSelected;
+
+  const CategoriesWidget({
+    super.key,
+    required this.genres,
+    required this.selectedGenre,
+    required this.onGenreSelected,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    // List kategori yang ingin ditampilkan
-    final List<String> categories = [
-      'Aksi',
-      'Petualangan',
-      'Romansa',
-      'Kehidupan',
-    ];
+  State<CategoriesWidget> createState() => _CategoriesWidgetState();
+}
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          for (int i = 0; i < categories.length; i++)
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+class _CategoriesWidgetState extends State<CategoriesWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: widget.genres.length,
+        itemBuilder: (context, index) {
+          final genre = widget.genres[index];
+          final isSelected = genre == widget.selectedGenre;
+
+          return Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: ChoiceChip(
+              label: Text(genre),
+              selected: isSelected,
+              onSelected: (selected) {
+                if (selected) {
+                  widget.onGenreSelected(genre);
+                }
+              },
+              backgroundColor: AppColors.surfaceSoft,
+              selectedColor: AppColors.primary,
+              labelStyle: AppTextStyles.buttonSm(
+                color: isSelected ? Colors.white : AppColors.body,
+              ).copyWith(
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
               ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.book,
-                    color: const Color.fromARGB(255, 42, 42, 45),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    categories[i], // Nama kategori sesuai list
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                      color: Color.fromARGB(255, 42, 42, 45),
-                    ),
-                  ),
-                ],
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-        ],
+          );
+        },
       ),
     );
   }

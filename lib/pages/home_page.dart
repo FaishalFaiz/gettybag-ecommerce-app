@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:gettybag_ecommerce_app/pages/account_page.dart';
-import 'package:gettybag_ecommerce_app/pages/cart_page.dart';
-import 'package:gettybag_ecommerce_app/widgets/CategoriesWidget.dart';
-import 'package:gettybag_ecommerce_app/widgets/HomeAppBar.dart';
-import 'package:gettybag_ecommerce_app/widgets/ItemsWidget.dart';
+import '../core/theme/app_colors.dart';
+import '../core/theme/app_text_styles.dart';
+import '../core/constants/app_constants.dart';
+import '../widgets/HomeAppBar.dart';
+import '../widgets/CategoriesWidget.dart';
+import '../widgets/ItemsWidget.dart';
+import 'account_page.dart';
+import 'cart_page.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -18,6 +20,12 @@ class _HomepageState extends State<Homepage> {
   final PageController _pageController = PageController();
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
@@ -27,119 +35,290 @@ class _HomepageState extends State<Homepage> {
             _currentIndex = index;
           });
         },
-        children: const [HomePageContent(), CartPage(), AccountPage()],
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
-        height: 70,
-        color: const Color.fromARGB(255, 42, 42, 45),
-        index: _currentIndex,
-        items: const [
-          Icon(Icons.home, size: 30, color: Colors.white),
-          Icon(Icons.shopping_cart, size: 30, color: Colors.white),
-          Icon(Icons.account_circle_sharp, size: 30, color: Colors.white),
+        children: const [
+          HomePageContent(),
+          CartPage(),
+          AccountPage(),
         ],
-        onTap: (index) {
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) {
           setState(() {
             _currentIndex = index;
             _pageController.jumpToPage(index);
           });
         },
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined),
+            selectedIcon: Icon(Icons.home_rounded),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.shopping_cart_outlined),
+            selectedIcon: Icon(Icons.shopping_cart_rounded),
+            label: 'Keranjang',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            selectedIcon: Icon(Icons.person_rounded),
+            label: 'Profil',
+          ),
+        ],
       ),
     );
   }
 }
 
-class HomePageContent extends StatelessWidget {
+class HomePageContent extends StatefulWidget {
   const HomePageContent({super.key});
 
   @override
+  State<HomePageContent> createState() => _HomePageContentState();
+}
+
+class _HomePageContentState extends State<HomePageContent> {
+  String _selectedGenre = 'Semua';
+  final Set<String> _wishlist = {};
+  final List<Map<String, dynamic>> _cartItemsList = [];
+
+  void _toggleWishlist(String bookId) {
+    setState(() {
+      if (_wishlist.contains(bookId)) {
+        _wishlist.remove(bookId);
+      } else {
+        _wishlist.add(bookId);
+      }
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          _wishlist.contains(bookId)
+              ? 'Buku ditambahkan ke Wishlist'
+              : 'Buku dihapus dari Wishlist',
+        ),
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
+  void _addToCart(Map<String, dynamic> book) {
+    setState(() {
+      _cartItemsList.add(book);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${book['title']} berhasil ditambahkan ke keranjang'),
+        action: SnackBarAction(
+          label: 'Lihat',
+          textColor: AppColors.accent,
+          onPressed: () {
+            // Navigator to cart
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        const HomeAppBar(),
-        Container(
-          padding: const EdgeInsets.only(top: 15),
-          decoration: const BoxDecoration(
-            color: Color(0xFFEDFCF2),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(35),
-              topRight: Radius.circular(35),
-            ),
-          ),
-          child: Column(
-            children: [
-              // Search Bar
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Search here...",
-                        ),
+    // Filter books based on selected genre
+    final filteredBooks = _selectedGenre == 'Semua'
+        ? kBooks
+        : kBooks.where((book) => book['genre'] == _selectedGenre).toList();
+
+    return Scaffold(
+      appBar: HomeAppBar(
+        unreadChats: 3,
+        onChatTap: () {
+          Navigator.pushNamed(context, kRouteChat);
+        },
+      ),
+      body: ListView(
+        children: [
+          const SizedBox(height: 16),
+          // Search Bar Pill style Airbnb
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Container(
+              height: 54,
+              decoration: BoxDecoration(
+                color: AppColors.canvas,
+                borderRadius: BorderRadius.circular(9999),
+                border: Border.all(color: AppColors.hairline),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.03),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ],
+              ),
+              child: Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Icon(Icons.search_rounded, color: AppColors.muted),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        hintText: 'Cari buku, penulis, penerbit...',
+                        hintStyle: AppTextStyles.bodySm(color: AppColors.muted),
+                        contentPadding: EdgeInsets.zero,
                       ),
                     ),
-                    const Icon(
-                      Icons.camera_alt,
-                      size: 27,
-                      color: Color.fromARGB(255, 42, 42, 45),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: CircleAvatar(
+                      backgroundColor: AppColors.primary,
+                      child: IconButton(
+                        icon: const Icon(Icons.tune_rounded, color: Colors.white, size: 20),
+                        onPressed: () {
+                          // Filter bottom sheet
+                        },
+                      ),
                     ),
-                  ],
-                ),
-              ),
-
-              // Categories Header
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 10,
-                ),
-                child: const Text(
-                  'Genres',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 42, 42, 45),
                   ),
-                ),
+                ],
               ),
-
-              // Categories Widget
-              const CategoriesWidget(),
-
-              // Best Selling Header
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 10,
-                ),
-                child: const Text(
-                  'Best Selling Books',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 42, 42, 45),
-                  ),
-                ),
-              ),
-
-              // Items Widget
-              ItemsWidget(),
-            ],
+            ),
           ),
-        ),
-      ],
+          const SizedBox(height: 24),
+
+          // Horizontal Store Promos / Banner
+          SizedBox(
+            height: 140,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: kBookStores.length,
+              itemBuilder: (context, index) {
+                final store = kBookStores[index];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Container(
+                    width: 280,
+                    decoration: BoxDecoration(
+                      gradient: AppColors.primaryGradient,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  'Toko Pilihan',
+                                  style: AppTextStyles.uppercaseTag(color: AppColors.accent).copyWith(fontSize: 9),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                store['name'],
+                                style: AppTextStyles.titleMd(color: Colors.white),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                store['description'],
+                                style: AppTextStyles.captionSm(color: Colors.white70),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.asset(
+                            'assets/images/${store['imageIndex']}.jpg',
+                            width: 60,
+                            height: 80,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) => const Icon(Icons.store, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          // Categories Header & Filter chip list
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              'Pilih Genre',
+              style: AppTextStyles.displaySm(),
+            ),
+          ),
+          const SizedBox(height: 12),
+          CategoriesWidget(
+            genres: kGenres,
+            selectedGenre: _selectedGenre,
+            onGenreSelected: (genre) {
+              setState(() {
+                _selectedGenre = genre;
+              });
+            },
+          ),
+          const SizedBox(height: 24),
+
+          // Best Selling Header
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Katalog Buku Pilihan',
+                  style: AppTextStyles.displaySm(),
+                ),
+                Text(
+                  '${filteredBooks.length} Buku',
+                  style: AppTextStyles.caption(),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Book Katalog Grid
+          ItemsWidget(
+            books: filteredBooks,
+            wishlist: _wishlist,
+            onWishlistToggle: _toggleWishlist,
+            onAddToCart: _addToCart,
+          ),
+          const SizedBox(height: 32),
+        ],
+      ),
     );
   }
 }
