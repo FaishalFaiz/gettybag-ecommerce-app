@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../core/theme/app_colors.dart';
+import '../core/theme/app_text_styles.dart';
+import '../core/constants/app_constants.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -7,156 +10,251 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Your Account',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-            color: Color.fromARGB(255, 42, 42, 45),
+        title: const Text('Profil Saya'),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Pengaturan detail profil sedang dikembangkan')),
+              );
+            },
           ),
-        ),
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Color.fromARGB(255, 42, 42, 45)),
-        actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
+        ],
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              _buildProfileSection(),
-              const SizedBox(height: 30),
-              _buildSettingsSection(context),
-            ],
-          ),
+        child: Column(
+          children: [
+            // Profile Header Card
+            _buildProfileHeader(context),
+            const SizedBox(height: 12),
+
+            // Profile Stats Section
+            _buildProfileStats(),
+            const SizedBox(height: 24),
+
+            // Profile Settings Section
+            _buildSettingsList(context),
+            const SizedBox(height: 32),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildProfileSection() {
+  Widget _buildProfileHeader(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromARGB(255, 42, 42, 45),
-            Color.fromARGB(255, 42, 42, 45),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
+      width: double.infinity,
+      margin: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: AppColors.primaryGradient,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
-      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
       child: Row(
         children: [
-          ClipOval(
-            child: Image.asset(
-              'assets/images/mart.png',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.white,
+                width: 3,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 8,
+                ),
+              ],
+            ),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/mart.png',
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => const CircleAvatar(
+                  radius: 40,
+                  backgroundColor: AppColors.surfaceStrong,
+                  child: Icon(Icons.person, size: 40, color: AppColors.muted),
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'Faiz Faishal Nugroho',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  kUser['name'],
+                  style: AppTextStyles.displaySm(color: Colors.white).copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: 5),
-              Text(
-                'faishal@example.com',
-                style: TextStyle(color: Colors.white70),
-              ),
-            ],
+                const SizedBox(height: 6),
+                Text(
+                  kUser['email'],
+                  style: AppTextStyles.captionSm(color: Colors.white.withValues(alpha: 0.7)),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  kUser['phone'],
+                  style: AppTextStyles.captionSm(color: Colors.white.withValues(alpha: 0.7)),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSettingItem(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: ListTile(
-        leading: Icon(
-          icon,
-          color: const Color.fromARGB(255, 42, 42, 45),
-          size: 28,
+  Widget _buildProfileStats() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: AppColors.hairline),
         ),
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildStatItem('Pesanan', kUser['orderCount'].toString(), Icons.local_shipping_outlined),
+              Container(height: 30, width: 1, color: AppColors.hairline),
+              _buildStatItem('Wishlist', kUser['wishlistCount'].toString(), Icons.favorite_border),
+              Container(height: 30, width: 1, color: AppColors.hairline),
+              _buildStatItem('Ulasan', kUser['reviewCount'].toString(), Icons.rate_review_outlined),
+            ],
+          ),
         ),
-        trailing: const Icon(
-          Icons.arrow_forward_ios,
-          color: Colors.grey,
-          size: 16,
-        ),
-        onTap: onTap,
       ),
     );
   }
 
-  Widget _buildSettingsSection(BuildContext context) {
+  Widget _buildStatItem(String label, String value, IconData icon) {
     return Column(
       children: [
-        _buildSettingItem(
-          context,
-          icon: Icons.person_outline,
-          title: 'Profile',
-          onTap: () {
-            Navigator.pushNamed(context, '/accountPage');
-          },
+        Icon(icon, color: AppColors.primary, size: 24),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: AppTextStyles.titleMd().copyWith(fontWeight: FontWeight.bold),
         ),
-        _buildSettingItem(
-          context,
-          icon: Icons.lock_outline,
-          title: 'Change Password',
-          onTap: () {
-            Navigator.pushNamed(context, '/changePassword');
-          },
-        ),
-        _buildSettingItem(
-          context,
-          icon: Icons.notifications_outlined,
-          title: 'Notifications',
-          onTap: () {
-            Navigator.pushNamed(context, '/notifications');
-          },
-        ),
-        _buildSettingItem(
-          context,
-          icon: Icons.help_outline,
-          title: 'Help & Support',
-          onTap: () {
-            Navigator.pushNamed(context, '/help');
-          },
-        ),
-        _buildSettingItem(
-          context,
-          icon: Icons.logout,
-          title: 'Logout',
-          onTap: () {
-            _showLogoutDialog(context);
-          },
+        const SizedBox(height: 2),
+        Text(
+          label,
+          style: AppTextStyles.captionSm(),
         ),
       ],
+    );
+  }
+
+  Widget _buildSettingsList(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: AppColors.canvas,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.hairline),
+      ),
+      child: Column(
+        children: [
+          _buildSettingsTile(
+            context,
+            icon: Icons.person_outline_rounded,
+            title: 'Edit Profil',
+            subtitle: 'Nama, email, nomor hp, dan alamat',
+            onTap: () {},
+          ),
+          const Divider(),
+          _buildSettingsTile(
+            context,
+            icon: Icons.lock_outline_rounded,
+            title: 'Keamanan Akun',
+            subtitle: 'Ubah password dan verifikasi dua langkah',
+            onTap: () {},
+          ),
+          const Divider(),
+          _buildSettingsTile(
+            context,
+            icon: Icons.location_on_outlined,
+            title: 'Daftar Alamat',
+            subtitle: 'Alamat pengiriman belanjaan buku',
+            onTap: () {},
+          ),
+          const Divider(),
+          _buildSettingsTile(
+            context,
+            icon: Icons.help_outline_rounded,
+            title: 'Bantuan & Dukungan',
+            subtitle: 'Hubungi tim operasional CS GettyBag',
+            onTap: () {},
+          ),
+          const Divider(),
+          _buildSettingsTile(
+            context,
+            icon: Icons.logout_rounded,
+            title: 'Keluar',
+            subtitle: 'Keluar dari sesi akun ini',
+            titleColor: AppColors.error,
+            onTap: () => _showLogoutDialog(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSettingsTile(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+    Color? titleColor,
+  }) {
+    return ListTile(
+      leading: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: (titleColor == AppColors.error ? AppColors.error : AppColors.primary)
+              .withValues(alpha: 0.08),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          icon,
+          color: titleColor ?? AppColors.primary,
+          size: 22,
+        ),
+      ),
+      title: Text(
+        title,
+        style: AppTextStyles.titleSm().copyWith(
+          fontWeight: FontWeight.w700,
+          color: titleColor ?? AppColors.ink,
+        ),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: AppTextStyles.captionSm(),
+      ),
+      trailing: const Icon(
+        Icons.chevron_right_rounded,
+        color: AppColors.muted,
+      ),
+      onTap: onTap,
     );
   }
 
@@ -168,35 +266,39 @@ class AccountPage extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: const Text(
-            'Logout',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          title: Text(
+            'Konfirmasi Keluar',
+            style: AppTextStyles.displaySm(),
           ),
-          content: const Text('Are you sure you want to logout?'),
+          content: Text(
+            'Apakah Anda yakin ingin keluar dari GettyBag?',
+            style: AppTextStyles.bodyMd(),
+          ),
+          actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                'Batal',
+                style: AppTextStyles.buttonSm(color: AppColors.muted),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.pushNamed(context, '/loginPage');
+                Navigator.pushReplacementNamed(context, kRouteLogin);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 42, 42, 45),
+                backgroundColor: AppColors.error,
+                foregroundColor: Colors.white,
+                minimumSize: const Size(88, 36),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
-                'Logout',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+              child: Text(
+                'Keluar',
+                style: AppTextStyles.buttonSm(color: Colors.white),
               ),
             ),
           ],
