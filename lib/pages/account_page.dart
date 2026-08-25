@@ -75,17 +75,13 @@ class AccountPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: ClipOval(
-              child: Image.asset(
-                'assets/images/mart.png',
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => const CircleAvatar(
-                  radius: 40,
-                  backgroundColor: AppColors.surfaceStrong,
-                  child: Icon(Icons.person, size: 40, color: AppColors.muted),
-                ),
+            child: CircleAvatar(
+              radius: 40,
+              backgroundColor: AppColors.surfaceSoft,
+              child: const Icon(
+                Icons.person_rounded,
+                size: 40,
+                color: AppColors.primary,
               ),
             ),
           ),
