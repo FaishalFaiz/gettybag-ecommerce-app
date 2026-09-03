@@ -11,20 +11,24 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final _loginFormKey = GlobalKey<FormState>();
   final _signupFormKey = GlobalKey<FormState>();
 
   // Login Controllers
   final TextEditingController _loginEmailController = TextEditingController();
-  final TextEditingController _loginPasswordController = TextEditingController();
+  final TextEditingController _loginPasswordController =
+      TextEditingController();
 
   // Sign Up Controllers
   final TextEditingController _signupNameController = TextEditingController();
   final TextEditingController _signupEmailController = TextEditingController();
-  final TextEditingController _signupPasswordController = TextEditingController();
-  final TextEditingController _signupConfirmPasswordController = TextEditingController();
+  final TextEditingController _signupPasswordController =
+      TextEditingController();
+  final TextEditingController _signupConfirmPasswordController =
+      TextEditingController();
 
   bool _obscureLoginPassword = true;
   bool _obscureSignupPassword = true;
@@ -95,9 +99,13 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const GettyBagLogo(size: 60, color: Colors.white, showBackground: true),
+                          const GettyBagLogo(size: 60, showBackground: true),
                           const SizedBox(height: 12),
-                          GettyBagWordmark(fontSize: 28, color: Colors.white, showTagline: true),
+                          GettyBagWordmark(
+                            fontSize: 28,
+                            color: Colors.white,
+                            showTagline: true,
+                          ),
                         ],
                       ),
                     ),
@@ -120,7 +128,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0,
+                    vertical: 8.0,
+                  ),
                   child: Column(
                     children: [
                       const SizedBox(height: 12),
@@ -141,13 +152,15 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 color: Colors.black.withValues(alpha: 0.05),
                                 blurRadius: 4,
                                 offset: const Offset(0, 2),
-                              )
+                              ),
                             ],
                           ),
                           indicatorSize: TabBarIndicatorSize.tab,
                           labelColor: AppColors.primary,
                           unselectedLabelColor: AppColors.muted,
-                          labelStyle: AppTextStyles.titleSm().copyWith(fontWeight: FontWeight.w700),
+                          labelStyle: AppTextStyles.titleSm().copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
                           unselectedLabelStyle: AppTextStyles.titleSm(),
                           tabs: const [
                             Tab(text: 'Masuk'),
@@ -159,10 +172,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       Expanded(
                         child: TabBarView(
                           controller: _tabController,
-                          children: [
-                            _buildLoginForm(),
-                            _buildSignupForm(),
-                          ],
+                          children: [_buildLoginForm(), _buildSignupForm()],
                         ),
                       ),
                     ],
@@ -185,11 +195,19 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           children: [
             Text('Selamat Datang Kembali!', style: AppTextStyles.displayLg()),
             const SizedBox(height: 8),
-            Text('Masuk ke akunmu untuk melanjutkan berbelanja buku.', style: AppTextStyles.bodySm()),
+            Text(
+              'Masuk ke akunmu untuk melanjutkan berbelanja buku.',
+              style: AppTextStyles.bodySm(),
+            ),
             const SizedBox(height: 24),
 
             // Email
-            Text('Email', style: AppTextStyles.caption().copyWith(fontWeight: FontWeight.w600)),
+            Text(
+              'Email',
+              style: AppTextStyles.caption().copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _loginEmailController,
@@ -214,17 +232,26 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Password', style: AppTextStyles.caption().copyWith(fontWeight: FontWeight.w600)),
+                Text(
+                  'Password',
+                  style: AppTextStyles.caption().copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 GestureDetector(
                   onTap: () {
                     // Placeholder for forgot password
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Fitur reset password belum tersedia.')),
+                      const SnackBar(
+                        content: Text('Fitur reset password belum tersedia.'),
+                      ),
                     );
                   },
                   child: Text(
                     'Lupa Password?',
-                    style: AppTextStyles.caption(color: AppColors.primary).copyWith(fontWeight: FontWeight.w700),
+                    style: AppTextStyles.caption(
+                      color: AppColors.primary,
+                    ).copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),
               ],
@@ -235,10 +262,15 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               obscureText: _obscureLoginPassword,
               decoration: InputDecoration(
                 hintText: 'Masukkan password',
-                prefixIcon: const Icon(Icons.lock_outlined, color: AppColors.muted),
+                prefixIcon: const Icon(
+                  Icons.lock_outlined,
+                  color: AppColors.muted,
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _obscureLoginPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                    _obscureLoginPassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
                     color: AppColors.muted,
                   ),
                   onPressed: () {
@@ -287,9 +319,16 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.g_mobiledata, size: 28, color: AppColors.ink),
+                  const Icon(
+                    Icons.g_mobiledata,
+                    size: 28,
+                    color: AppColors.ink,
+                  ),
                   const SizedBox(width: 8),
-                  Text('Lanjutkan dengan Google', style: AppTextStyles.titleSm(color: AppColors.ink)),
+                  Text(
+                    'Lanjutkan dengan Google',
+                    style: AppTextStyles.titleSm(color: AppColors.ink),
+                  ),
                 ],
               ),
             ),
@@ -308,11 +347,19 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           children: [
             Text('Buat Akun Baru', style: AppTextStyles.displayLg()),
             const SizedBox(height: 8),
-            Text('Daftar sekarang untuk mulai memesan buku pilihan.', style: AppTextStyles.bodySm()),
+            Text(
+              'Daftar sekarang untuk mulai memesan buku pilihan.',
+              style: AppTextStyles.bodySm(),
+            ),
             const SizedBox(height: 20),
 
             // Nama Lengkap
-            Text('Nama Lengkap', style: AppTextStyles.caption().copyWith(fontWeight: FontWeight.w600)),
+            Text(
+              'Nama Lengkap',
+              style: AppTextStyles.caption().copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _signupNameController,
@@ -330,7 +377,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             const SizedBox(height: 12),
 
             // Email
-            Text('Email', style: AppTextStyles.caption().copyWith(fontWeight: FontWeight.w600)),
+            Text(
+              'Email',
+              style: AppTextStyles.caption().copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _signupEmailController,
@@ -352,17 +404,27 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             const SizedBox(height: 12),
 
             // Password
-            Text('Password', style: AppTextStyles.caption().copyWith(fontWeight: FontWeight.w600)),
+            Text(
+              'Password',
+              style: AppTextStyles.caption().copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _signupPasswordController,
               obscureText: _obscureSignupPassword,
               decoration: InputDecoration(
                 hintText: 'Masukkan password (min 6 karakter)',
-                prefixIcon: const Icon(Icons.lock_outlined, color: AppColors.muted),
+                prefixIcon: const Icon(
+                  Icons.lock_outlined,
+                  color: AppColors.muted,
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _obscureSignupPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                    _obscureSignupPassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
                     color: AppColors.muted,
                   ),
                   onPressed: () {
@@ -385,22 +447,33 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             const SizedBox(height: 12),
 
             // Konfirmasi Password
-            Text('Konfirmasi Password', style: AppTextStyles.caption().copyWith(fontWeight: FontWeight.w600)),
+            Text(
+              'Konfirmasi Password',
+              style: AppTextStyles.caption().copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(height: 8),
             TextFormField(
               controller: _signupConfirmPasswordController,
               obscureText: _obscureSignupConfirmPassword,
               decoration: InputDecoration(
                 hintText: 'Ulangi password',
-                prefixIcon: const Icon(Icons.lock_clock_outlined, color: AppColors.muted),
+                prefixIcon: const Icon(
+                  Icons.lock_clock_outlined,
+                  color: AppColors.muted,
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _obscureSignupConfirmPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                    _obscureSignupConfirmPassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
                     color: AppColors.muted,
                   ),
                   onPressed: () {
                     setState(() {
-                      _obscureSignupConfirmPassword = !_obscureSignupConfirmPassword;
+                      _obscureSignupConfirmPassword =
+                          !_obscureSignupConfirmPassword;
                     });
                   },
                 ),
